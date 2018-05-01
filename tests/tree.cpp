@@ -81,8 +81,8 @@ TEST_CASE("isEmpty tree")
 	tree1.insert(7);
 	tree1.insert(4);
 	
-	REQUIRE( tree1.isEmpty == false );
-	REQUIRE( tree2.isEmpty == true );
+	REQUIRE( tree1.isEmpty() == false );
+	REQUIRE( tree2.isEmpty() == true );
 }
 
 
