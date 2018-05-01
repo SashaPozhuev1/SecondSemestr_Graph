@@ -39,7 +39,7 @@ public:
 	bool isEmpty();
 	auto operator==(tree_t const & other) const;
 	node_t * root();
-	bool is_leaf(node_t *);
+	bool isLeaf(node_t *);
 	void print(std::ostream &) const;
 };
 
@@ -128,7 +128,7 @@ typename tree_t<T>::node_t * tree_t<T>::brother(node_t const *n) {
 }
 
 template <typename T>
-bool tree_t<T>::is_leaf(node_t *n) {
+bool tree_t<T>::isLeaf(node_t *n) {
 	if (n->right || n->left) {
 		return false;
 	}
