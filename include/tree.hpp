@@ -25,6 +25,7 @@ private:
 	bool compare(bool &, node_t *, node_t *) const;
 	void destroy(node_t * curr_);
 	void inorder(std::ostream &, const node_t *, std::size_t) const;
+	bool isLeaf(node_t *);
 public:
 	tree_t() : root_(nullptr) {};
 	~tree_t();
@@ -39,7 +40,6 @@ public:
 	bool isEmpty();
 	auto operator==(tree_t const & other) const;
 	node_t * root();
-	bool isLeaf(node_t *);
 	void print(std::ostream &) const;
 };
 
