@@ -11,7 +11,7 @@ TEST_CASE("creating tree")
 
 TEST_CASE("insert and print tree")
 {
-	std::string input{
+	std::string input1{
 		"        ---- 9\n"
 		"            ---- 8\n"
 		"    ---- 7\n"
@@ -19,12 +19,34 @@ TEST_CASE("insert and print tree")
 		"---- 5\n"
 		"    ---- 4\n"
 		"        ----3\n"};
+	std::string input2{
+		"                ---- 9\n"
+		"            ---- 8\n"
+		"        ---- 7\n"
+		"            ---- 6\n"
+		"    ---- 5\n"
+		"        ---- 4\n"
+		"---- 3\n"
+		"            ---- 1\n"
+		"        ---- 0\n"
+		"            ---- -1\n"
+		"    ---- -2\n"
+		"            ---- -3\n"
+		"        ---- -4\n"
+		"                ---- -5\n"
+		"            ---- -6\n"
+		"                ---- -7\n"};
 	
-	tree_t<int> tree { 5, 7, 4, 6, 9, 7, 8, 3, 4 };
+	tree_t<int> tree1 { 5, 7, 4, 6, 9, 7, 8, 3, 4 };
+	tree_t<int> tree2 {0, 1, -1, 3, -2, 4, 5, 6, 7, 8, 9, -3, -4, -5, -6, -7, -5};
 	
-	std::ostringstream ostream;
-	tree.print(ostream);
-	REQUIRE( input == ostream.str() );
+	std::ostringstream ostream1;
+	std::ostringstream ostream2;
+	
+	tree1.print(ostream1);
+	tree1.print(ostream2);
+	REQUIRE( input1 == ostream1.str() );
+	REQUIRE( input2 == ostream2.str() );
 }
 
 TEST_CASE("find tree")
