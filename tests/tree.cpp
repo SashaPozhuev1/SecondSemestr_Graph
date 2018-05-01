@@ -84,15 +84,3 @@ TEST_CASE("isEmpty tree")
 	REQUIRE( tree1.isEmpty() == false );
 	REQUIRE( tree2.isEmpty() == true );
 }
-
-
-TEST_CASE("isLeaf tree")
-{
-	tree_t<int> tree;
-	
-	tree.insert(5);
-	tree.insert(7);
-	
-	REQUIRE( tree.isLeaf(root_) == false );
-	REQUIRE( tree.isLeaf(root_->right) == true );
-}
