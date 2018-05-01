@@ -335,9 +335,7 @@ bool tree_t<T>::search(T value, node_t * curr_, bool & success) const {
 			return success;
 		}
 	}
-	else {
 		return success;
-	}
 }
 
 
