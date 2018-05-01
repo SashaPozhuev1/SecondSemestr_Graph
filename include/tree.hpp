@@ -21,7 +21,7 @@ private:
 	void insert_4(node_t *);
 	void insert_5(node_t *);
 
-	node_t * search(T, node_t *) const;
+	bool search(T, node_t *, bool &) const;
 	bool compare(bool &, node_t *, node_t *) const;
 	void destroy(node_t * curr_);
 	void inorder(std::ostream &, const node_t *, std::size_t) const;
@@ -261,7 +261,8 @@ tree_t<T>::tree_t(std::initializer_list<T> keys) {
 
 template <typename T>
 void tree_t<T>::insert(T value) {
-	if (search(value, root_)) {
+	bool success = false;
+	if (search(value, root_, success)) {
 
 	}
 	else {
@@ -315,24 +316,27 @@ void tree_t<T>::insert(T value) {
 
 template <typename T>
 bool tree_t<T>::find(T value) const {
-	return bool(search(value, root_));
+	bool success = false;
+	search(value, root_, success);
+	return success;
 }
 
 template <typename T>
-typename tree_t<T>::node_t * tree_t<T>::search(T value, node_t * curr_) const {
+bool tree_t<T>::search(T value, node_t * curr_, bool & success) const {
 	if (curr_) {
 		if (curr_->value > value) {
-			search(value, curr_->left);
+			search(value, curr_->left, success);
 		}
 		else if (curr_->value < value) {
-			search(value, curr_->right);
+			search(value, curr_->right, success);
 		}
 		else if (curr_->value == value) {
-			return curr_;
+			success = true;
+			return success;
 		}
 	}
 	else {
-		return nullptr;
+		return success;
 	}
 }
 
