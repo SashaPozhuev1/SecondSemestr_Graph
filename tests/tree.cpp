@@ -104,7 +104,7 @@ TEST_CASE("1delete node")
 
 TEST_CASE("2delete node")
 {
-	std::string input1{
+	std::string input{
 		"        ---- 7\n"
 		"---- 5\n"};
 	
