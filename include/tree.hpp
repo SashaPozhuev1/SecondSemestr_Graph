@@ -344,7 +344,7 @@ void tree_t<T>::delete_node(T value) {
 	node_t *n_ = root_;
 	search_adress(value, root_, n_);
 
-	if (n_->value == value) {
+	if (n_ && n_->value == value) {
 		if (n_->left && n_->right) {
 			node_t *curr_ = n_->right;
 
