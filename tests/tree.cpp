@@ -108,7 +108,7 @@ TEST_CASE("2delete node")
 		"        ---- 7\n"
 		"---- 5\n"};
 	
-	tree_t<double> tree1 { 5, 7 };
+	tree_t<double> tree { 5, 7 };
 	tree.delete_node(5); 
 	tree.delete_node(7);
 	
