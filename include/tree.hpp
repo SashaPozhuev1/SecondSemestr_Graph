@@ -10,10 +10,19 @@ private:
 		T value;
 		bool color;// 0-черный; 1-красный
 	};
+
 	node_t * root_;
+
+	node_t * grandparent(node_t const *);
+	node_t * uncle(node_t const *);
+	node_t * brother(node_t const *);
+	node_t * search_adress(T, node_t *, node_t *&) const;
 
 	void rotate_left(node_t *);
 	void rotate_right(node_t *);
+
+	void replace_node(node_t *, node_t *);
+	void delete_child(node_t *);
 
 	void insert_1(node_t *);
 	void insert_2(node_t *);
@@ -21,27 +30,41 @@ private:
 	void insert_4(node_t *);
 	void insert_5(node_t *);
 
-	bool search(T, node_t *, bool &) const;
+	void delete_1(node_t *);
+	void delete_2(node_t *);
+	void delete_3(node_t *);
+	void delete_4(node_t *);
+	void delete_5(node_t *);
+	void delete_6(node_t *);
+
 	bool compare(bool &, node_t *, node_t *) const;
-	void destroy(node_t * curr_);
-	void inorder(std::ostream &, const node_t *, std::size_t) const;
 	bool isLeaf(node_t *);
+	void inorder(std::ostream &, const node_t *, std::size_t) const;
+	void destroy(node_t * curr_);
+
 public:
 	tree_t() : root_(nullptr) {};
 	~tree_t();
 	tree_t(std::initializer_list<T> keys);
 
-	node_t * grandparent(node_t const *);
-	node_t * uncle(node_t const *);
-	node_t * brother(node_t const *);
-
-	void insert(T);
-	bool find(T) const;
-	bool isEmpty();
 	auto operator==(tree_t const & other) const;
 	node_t * root();
+
+	void insert(T);
 	void print(std::ostream &) const;
+	void delete_node(T);
+	bool find(T) const;
+	bool isEmpty();
 };
+
+template <typename T>
+tree_t<T>::tree_t(std::initializer_list<T> keys) {
+	root_ = nullptr;
+	for (size_t i = 0; i < keys.size(); i++) {
+		T value = *(keys.begin() + i);
+		insert(value);
+	}
+}
 
 template <typename T>
 tree_t<T>::~tree_t() {
@@ -128,8 +151,8 @@ typename tree_t<T>::node_t * tree_t<T>::brother(node_t const *n) {
 }
 
 template <typename T>
-bool tree_t<T>::isLeaf(node_t *n) {
-	if (n->right || n->left) {
+bool tree_t<T>::isLeaf(node_t *n_) {
+	if (n_->right || n_->left) {
 		return false;
 	}
 	return true;
@@ -177,6 +200,60 @@ void tree_t<T>::rotate_right(node_t *n) {
 	}
 	n->parent = pivot;
 	pivot->right = n;
+}
+
+template <typename T>
+void tree_t<T>::insert(T value) {
+	if (find(value)) {
+
+	}
+	else {
+		if (!root_) {
+			root_ = new node_t;
+			root_->value = value;
+			root_->parent = nullptr;
+			root_->left = nullptr;
+			root_->right = nullptr;
+			insert_1(root_);
+		}
+		else {
+			node_t * curr_ = root_;
+			while (curr_) {
+				if (value > curr_->value) {
+					if (curr_->right) {
+						curr_ = curr_->right;
+					}
+					else {
+						curr_->right = new node_t;
+						curr_->right->parent = curr_;
+						curr_ = curr_->right;
+						curr_->value = value;
+						curr_->color = 1;
+						curr_->left = nullptr;
+						curr_->right = nullptr;
+						insert_1(curr_);
+						break;
+					}
+				}
+				else if (value < curr_->value) {
+					if (curr_->left) {
+						curr_ = curr_->left;
+					}
+					else {
+						curr_->left = new node_t;
+						curr_->left->parent = curr_;
+						curr_ = curr_->left;
+						curr_->value = value;
+						curr_->color = 1;
+						curr_->left = nullptr;
+						curr_->right = nullptr;
+						insert_1(curr_);
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 template <typename T>
@@ -251,93 +328,191 @@ void tree_t<T>::insert_5(node_t *n) {
 }
 
 template <typename T>
-tree_t<T>::tree_t(std::initializer_list<T> keys) {
-	root_ = nullptr;
-	for (size_t i = 0; i < keys.size(); i++) {
-		T value = *(keys.begin() + i);
-		insert(value);
+void tree_t<T>::replace_node(node_t *n_, node_t *child_) {
+	if (n_->parent) {
+		if (n_ == n_->parent->left) {
+			n_->parent->left = child_;
+		}
+		else {
+			n_->parent->right = child_;
+		}
 	}
 }
 
 template <typename T>
-void tree_t<T>::insert(T value) {
-	bool success = false;
-	if (search(value, root_, success)) {
+void tree_t<T>::delete_node(T value) {
+	node_t *n_ = root_;
+	search_adress(value, root_, n_);
 
-	}
-	else {
-		if (!root_) {
-			root_ = new node_t;
-			root_->value = value;
-			root_->parent = nullptr;
-			root_->left = nullptr;
-			root_->right = nullptr;
-			insert_1(root_);
+	if (n_->value == value) {
+		if (n_->left && n_->right) {
+			node_t *curr_ = n_->right;
+
+			while (curr_->left) {
+				curr_ = curr_->left;
+			}
+
+			n_->value = curr_->value;
+
+			delete_child(curr_);
 		}
 		else {
-			node_t * curr_ = root_;
-			while (curr_) {
-				if (value > curr_->value) {
-					if (curr_->right) {
-						curr_ = curr_->right;
-					}
-					else {
-						curr_->right = new node_t;
-						curr_->right->parent = curr_;
-						curr_ = curr_->right;
-						curr_->value = value;
-						curr_->color = 1;
-						curr_->left = nullptr;
-						curr_->right = nullptr;
-						insert_1(curr_);
-						break;
-					}
-				}
-				else if (value < curr_->value) {
-					if (curr_->left) {
-						curr_ = curr_->left;
-					}
-					else {
-						curr_->left = new node_t;
-						curr_->left->parent = curr_;
-						curr_ = curr_->left;
-						curr_->value = value;
-						curr_->color = 1;
-						curr_->left = nullptr;
-						curr_->right = nullptr;
-						insert_1(curr_);
-						break;
-					}
-				}
-			}
+			delete_child(n_);
 		}
+	}
+}
+
+template <typename T>
+void tree_t<T>::delete_child(node_t *n_) {
+	node_t *child_ = (n_->right) ? n_->right : n_->left;
+
+	replace_node(n_, child_);
+	if (n_ == root_) {
+		root_ = child_;
+	}
+
+	if (n_->color == 0 && child_) {
+		if (child_->color == 1) {
+			child_->color = 0;
+		}
+		else {
+			delete_1(child_);
+		}
+	}
+	delete n_;
+}
+
+template <typename T>
+void tree_t<T>::delete_1(node_t *n_) {
+	if (n_->parent != nullptr) {
+		delete_2(n_);
+	}
+}
+
+template <typename T>
+void tree_t<T>::delete_2(node_t *n_) {
+	node_t *s_ = brother(n_);
+
+	if (s_->color == 1) {
+		n_->parent->color = 1;
+		s_->color = 0;
+		if (n_ == n_->parent->left) {
+			if (n_->parent == root_) {
+				root_ = n_->parent->right;
+			}
+			rotate_left(n_->parent);
+		}
+		else {
+			if (n_->parent == root_) {
+				root_ = n_->parent->left;
+			}
+			rotate_right(n_->parent);
+		}
+	}
+	delete_3(n_);
+}
+
+template <typename T>
+void tree_t<T>::delete_3(node_t *n_) {
+	node_t *s_ = brother(n_);
+
+	if ((n_->parent->color == 0) &&
+	    (s_->color == 0) &&
+	    (s_->left->color == 0) &&
+	    (s_->right->color == 0)) {
+		s_->color = 1;
+		delete_1(n_->parent);
+	} else
+		delete_4(n_);
+}
+
+template <typename T>
+void tree_t<T>::delete_4(node_t *n_) {
+	node_t *s_ = brother(n_);
+
+	if ((n_->parent->color == 1) &&
+		(s_->color == 0) &&
+		(s_->left->color == 0) &&
+		(s_->right->color == 0)) {
+		s_->color = 1;
+		n_->parent->color = 0;
+	}
+	else
+		delete_5(n_);
+}
+
+template <typename T>
+void tree_t<T>::delete_5(node_t *n_) {
+	node_t *s_ = brother(n_);
+
+	if (s_->color == 0) {
+		if ((n_ == n_->parent->left) &&
+			(s_->right->color == 0) &&
+			(s_->left->color == 1)) {
+			s_->color = 1;
+			s_->left->color = 0;
+			rotate_right(s_);
+		}
+		else if ((n_ == n_->parent->right) &&
+			(s_->left->color == 0) &&
+			(s_->right->color == 1)) {
+			s_->color = 1;
+			s_->right->color = 0;
+			rotate_left(s_);
+		}
+	}
+	delete_6(n_);
+}
+
+template <typename T>
+void tree_t<T>::delete_6(node_t *n_) {
+	node_t *s_ = brother(n_);
+
+	s_->color = n_->parent->color;
+	n_->parent->color = 0;
+
+	if (n_ == n_->parent->left) {
+		s_->right->color = 0;
+		if (n_->parent == root_) {
+			root_ = n_->parent->right;
+		}
+		rotate_left(n_->parent);
+	}
+	else {
+		s_->left->color = 0;
+		if (n_->parent == root_) {
+			root_ = n_->parent->left;
+		}
+		rotate_right(n_->parent);
 	}
 }
 
 template <typename T>
 bool tree_t<T>::find(T value) const {
-	bool success = false;
-	search(value, root_, success);
-	return success;
+	node_t *n_ = root_;
+	search_adress(value, root_, n_);
+	if (n_ && n_->value == value) {
+		return true;
+	}
+	return false;
 }
 
 template <typename T>
-bool tree_t<T>::search(T value, node_t * curr_, bool & success) const {
+typename tree_t<T>::node_t * tree_t<T>::search_adress(T value, node_t * curr_, node_t *& n_) const {
 	if (curr_) {
 		if (curr_->value > value) {
-			search(value, curr_->left, success);
+			search_adress(value, curr_->left, n_);
 		}
 		else if (curr_->value < value) {
-			search(value, curr_->right, success);
+			search_adress(value, curr_->right, n_);
 		}
 		else if (curr_->value == value) {
-			success = true;
-			return success;
+			n_ = curr_;
+			return n_;
 		}
 	}
-		return success;
+	return root_;
 }
-
 
 template <typename T>
 void tree_t<T>::print(std::ostream & stream) const {
