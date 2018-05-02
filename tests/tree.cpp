@@ -72,3 +72,32 @@ TEST_CASE("isEmpty tree")
 	REQUIRE( tree1.isEmpty() == false );
 	REQUIRE( tree2.isEmpty() == true );
 }
+
+TEST_CASE("delete node")
+{
+	std::string input1{
+		"        ---- 9\n"
+		"    ---- 8\n"
+		"        ---- 6\n"
+		"---- 4\n"
+		"        ---- 1\n"
+		"            ---- -1\n"
+		"    ---- -2\n"
+		"            ---- -3\n"
+		"        ---- -4\n"
+		"                ---- -5\n"
+		"            ---- -6\n"
+		"                ---- -7\n"};
+	
+	tree_t<int> tree1 {0, 1, -1, 3, -2, 4, 5, 6, 7, 8, 9, -3, -4, -5, -6, -7, -5};
+	tree1.delete_node(3); 
+	tree1.delete_node(5); 
+	tree1.delete_node(0); 
+	tree1.delete_node(7); 
+	tree1.delete_node(7);
+	
+	std::ostringstream ostream1;
+	
+	tree1.print(ostream1);
+	REQUIRE( input1 == ostream1.str() );
+}
