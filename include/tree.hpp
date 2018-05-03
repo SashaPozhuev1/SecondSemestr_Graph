@@ -114,9 +114,6 @@ bool tree_t<T>::compare(bool & success, node_t * left, node_t * right) const {
 
 template <typename T>
 typename tree_t<T>::node_t * tree_t<T>::root() {
-	while (root_->parent) {
-		root_ = root_->parent;
-	}
 	return root_;
 }
 
@@ -182,7 +179,6 @@ void tree_t<T>::rotate_left(node_t *n) {
 	}
 	n->parent = pivot;
 	pivot->left = n;
-	root_ = root();
 }
 
 template <typename T>
@@ -205,7 +201,6 @@ void tree_t<T>::rotate_right(node_t *n) {
 	}
 	n->parent = pivot;
 	pivot->right = n;
-	root_ = root();
 }
 
 template <typename T>
@@ -320,9 +315,15 @@ void tree_t<T>::insert_5(node_t *n) {
 	n->parent->color = 0;
 	g->color = 1;
 	if (n == n->parent->left && n->parent == g->left) {
+		if (g == root_) {
+			root_ = n->parent;
+		}
 		rotate_right(g);
 	}
 	else {
+		if (g == root_) {
+			root_ = n->parent;
+		}
 		rotate_left(g);
 	}
 }
@@ -367,6 +368,9 @@ void tree_t<T>::delete_child(node_t *n_) {
 	node_t *child_ = (n_->right) ? n_->right : n_->left;
 
 	replace_node(n_, child_);
+	if (n_ == root_) {
+		root_ = child_;
+	}
 
 	if (n_->color == 0 && child_) {
 		if (child_->color == 1) {
@@ -375,9 +379,6 @@ void tree_t<T>::delete_child(node_t *n_) {
 		else {
 			delete_1(child_);
 		}
-	}
-	if (root_ == n_) {
-		root_ = nullptr;
 	}
 	delete n_;
 }
@@ -397,9 +398,15 @@ void tree_t<T>::delete_2(node_t *n_) {
 		n_->parent->color = 1;
 		s_->color = 0;
 		if (n_ == n_->parent->left) {
+			if (n_->parent == root_) {
+				root_ = n_->parent->right;
+			}
 			rotate_left(n_->parent);
 		}
 		else {
+			if (n_->parent == root_) {
+				root_ = n_->parent->left;
+			}
 			rotate_right(n_->parent);
 		}
 	}
@@ -467,10 +474,16 @@ void tree_t<T>::delete_6(node_t *n_) {
 
 	if (n_ == n_->parent->left) {
 		s_->right->color = 0;
+		if (n_->parent == root_) {
+			root_ = n_->parent->right;
+		}
 		rotate_left(n_->parent);
 	}
 	else {
 		s_->left->color = 0;
+		if (n_->parent == root_) {
+			root_ = n_->parent->left;
+		}
 		rotate_right(n_->parent);
 	}
 }
