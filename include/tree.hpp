@@ -62,9 +62,8 @@ public:
 template <typename T>
 tree_t<T>::tree_t(std::initializer_list<T> keys) {
 	root_ = nullptr;
-	for (size_t i = 0; i < keys.size(); i++) {
-		T value = *(keys.begin() + i);
-		insert(value);
+	for (auto key : keys) {
+		insert(key);
 	}
 }
 
