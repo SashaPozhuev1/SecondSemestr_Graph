@@ -22,6 +22,7 @@ private:
 	void rotate_left(node_t *);
 	void rotate_right(node_t *);
 
+	void create_node(T, node_t *, node_t *&);
 	void replace_node(node_t *, node_t *);
 	void delete_child(node_t *);
 
@@ -204,17 +205,23 @@ void tree_t<T>::rotate_right(node_t *n) {
 }
 
 template <typename T>
+void tree_t<T>::create_node(T value, node_t *parent_, node_t *& curr_) {
+	curr_ = new node_t;
+	curr_->parent = parent_;
+	curr_->left = nullptr;
+	curr_->right = nullptr;
+	curr_->value = value;
+	curr_->color = 1;
+}
+
+template <typename T>
 void tree_t<T>::insert(T value) {
 	if (find(value)) {
 
 	}
 	else {
 		if (!root_) {
-			root_ = new node_t;
-			root_->value = value;
-			root_->parent = nullptr;
-			root_->left = nullptr;
-			root_->right = nullptr;
+			create_node(value, nullptr, root_);
 			insert_1(root_);
 		}
 		else {
@@ -225,13 +232,8 @@ void tree_t<T>::insert(T value) {
 						curr_ = curr_->right;
 					}
 					else {
-						curr_->right = new node_t;
-						curr_->right->parent = curr_;
+						create_node(value, curr_, curr_->right);
 						curr_ = curr_->right;
-						curr_->value = value;
-						curr_->color = 1;
-						curr_->left = nullptr;
-						curr_->right = nullptr;
 						insert_1(curr_);
 						break;
 					}
@@ -241,13 +243,8 @@ void tree_t<T>::insert(T value) {
 						curr_ = curr_->left;
 					}
 					else {
-						curr_->left = new node_t;
-						curr_->left->parent = curr_;
+						create_node(value, curr_, curr_->left);
 						curr_ = curr_->left;
-						curr_->value = value;
-						curr_->color = 1;
-						curr_->left = nullptr;
-						curr_->right = nullptr;
 						insert_1(curr_);
 						break;
 					}
@@ -418,12 +415,13 @@ void tree_t<T>::delete_3(node_t *n_) {
 	node_t *s_ = brother(n_);
 
 	if ((n_->parent->color == 0) &&
-	    (s_->color == 0) &&
-	    (s_->left->color == 0) &&
-	    (s_->right->color == 0)) {
+		(s_->color == 0) &&
+		(s_->left->color == 0) &&
+		(s_->right->color == 0)) {
 		s_->color = 1;
 		delete_1(n_->parent);
-	} else
+	}
+	else
 		delete_4(n_);
 }
 
@@ -538,7 +536,7 @@ void tree_t<T>::inorder(std::ostream & stream, const node_t * curr_, std::size_t
 					stream << "    ";
 				}
 			}
-			stream << ' ' <<curr_->value << std::endl;
+			stream << ' ' << curr_->value << std::endl;
 		}
 		else {
 			count--;
