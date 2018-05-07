@@ -200,7 +200,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"        ---- b20\n"
 							"    ---- b15\n"
 							"        ---- b10\n" 
-							"            ---- r5\n" ););
+							"            ---- r5\n" );
 }
 TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     tree_t<int> tree;
