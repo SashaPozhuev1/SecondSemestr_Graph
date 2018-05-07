@@ -226,7 +226,7 @@ void tree_t<T>::insert(T value) {
 		else {
 			node_t * curr_ = root_;
 			while (curr_) {
-				if (value > curr_->value) {
+				if (value >= curr_->value) {
 					if (curr_->right) {
 						curr_ = curr_->right;
 					}
@@ -535,7 +535,7 @@ void tree_t<T>::inorder(std::ostream & stream, const node_t * curr_, std::size_t
 					stream << "    ";
 				}
 			}
-			stream << ' ' << curr_->value << std::endl;
+			curr_->color ? stream << ' ' << 'r' << curr_->value << std::endl : stream << ' ' << 'b' << curr_->value << std::endl;
 		}
 		else {
 			count--;
@@ -547,7 +547,7 @@ void tree_t<T>::inorder(std::ostream & stream, const node_t * curr_, std::size_t
 					stream << "    ";
 				}
 			}
-			stream << ' ' << curr_->value << std::endl;
+			curr_->color ? stream << ' ' << 'r' << curr_->value << std::endl : stream << ' ' << 'b' << curr_->value << std::endl;
 		}
 		if (curr_->left) {
 			count++;
