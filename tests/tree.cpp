@@ -9,34 +9,6 @@ TEST_CASE("creating tree")
 	REQUIRE( tree.root() == nullptr );
 }
 
-TEST_CASE("insert and print tree")
-{
-	std::string input{
-		"                ---- 9\n"
-		"            ---- 8\n"
-		"        ---- 7\n"
-		"            ---- 6\n"
-		"    ---- 5\n"
-		"        ---- 4\n"
-		"---- 3\n"
-		"            ---- 1\n"
-		"        ---- 0\n"
-		"            ---- -1\n"
-		"    ---- -2\n"
-		"            ---- -3\n"
-		"        ---- -4\n"
-		"                ---- -5\n"
-		"            ---- -6\n"
-		"                ---- -7\n"};
-	
-	tree_t<int> tree {0, 1, -1, 3, -2, 4, 5, 6, 7, 8, 9, -3, -4, -5, -6, -7, -5};
-	
-	std::ostringstream ostream;
-	
-	tree.print(ostream);
-	REQUIRE( input == ostream.str() );
-}
-
 TEST_CASE("find tree")
 {
 	tree_t<int> tree;
@@ -72,7 +44,7 @@ TEST_CASE("isEmpty tree")
 	REQUIRE( tree1.isEmpty() == false );
 	REQUIRE( tree2.isEmpty() == true );
 }
-
+/*
 TEST_CASE("1delete node")
 {
 	std::string input{
@@ -114,3 +86,31 @@ TEST_CASE("2delete node")
 	
 	REQUIRE( tree.isEmpty() );
 }
+
+TEST_CASE("insert and print tree")
+{
+	std::string input{
+		"                ---- 9\n"
+		"            ---- 8\n"
+		"        ---- 7\n"
+		"            ---- 6\n"
+		"    ---- 5\n"
+		"        ---- 4\n"
+		"---- 3\n"
+		"            ---- 1\n"
+		"        ---- 0\n"
+		"            ---- -1\n"
+		"    ---- -2\n"
+		"            ---- -3\n"
+		"        ---- -4\n"
+		"                ---- -5\n"
+		"            ---- -6\n"
+		"                ---- -7\n"};
+	
+	tree_t<int> tree {0, 1, -1, 3, -2, 4, 5, 6, 7, 8, 9, -3, -4, -5, -6, -7, -5};
+	
+	std::ostringstream ostream;
+	
+	tree.print(ostream);
+	REQUIRE( input == ostream.str() );
+}*/
