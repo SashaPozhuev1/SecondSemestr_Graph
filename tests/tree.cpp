@@ -46,7 +46,7 @@ TEST_CASE("isEmpty tree")
 }
 
 TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
-    	tree<int> tree;
+    	tree_t<int> tree;
     
 	std::ostringstream ostream;
     	REQUIRE( tree.root() == nullptr );
@@ -203,7 +203,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"            ---- r5\n" ););
 }
 TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
-    tree<int> tree;
+    tree_t<int> tree;
     std::ostringstream ostream;
     REQUIRE( tree.root() == nullptr );
     tree.print(ostream);
@@ -218,7 +218,7 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     REQUIRE( ostream1.str() == "" );
     REQUIRE( tree.root() == nullptr );
     {
-        tree<int> tree;
+        tree_t<int> tree;
         tree.insert( 2 );
         tree.insert( 1 );
         tree.insert( 3 );
@@ -244,7 +244,7 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
 }
 TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
     {
-        tree<int> tree;
+        tree_t<int> tree;
 	std::ostringstream ostream;
         SECTION( "when brother is black and his sons" ) {
         tree<int> tree;
