@@ -74,7 +74,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
     	tree.print(ostream3);
     	REQUIRE( ostream3.str() == "    ---- b85\n"
 			           "        ---- r70\n"
-				   "----b15\n"
+				   "---- b15\n"
 				   "    ---- b10\n" );
     	tree.insert( 20 );
 	std::ostringstream ostream4;
@@ -210,7 +210,7 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     REQUIRE( ostream.str() == "" );
     tree.insert( 10 );
     tree.print(ostream);
-    REQUIRE( ostream.str() == "--b10\n" );
+    REQUIRE( ostream.str() == "---- b10\n" );
     //REQUIRE( tree.size() == 1 );
     tree.delete_node( 10 );
 	std::ostringstream ostream1;
@@ -270,7 +270,7 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"---- b6\n"
 							"        ---- b2\n"
 							"    ---- r2\n"
-							"        ----b1\n" );
+							"        ---- b1\n" );
         tree.delete_node( 9 );
 		std::ostringstream ostream1;
         tree.print(ostream1);
