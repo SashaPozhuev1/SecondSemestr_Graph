@@ -1,4 +1,5 @@
 #include <iostream>
+
 template <typename T>
 class tree_t
 {
@@ -350,8 +351,12 @@ void tree_t<T>::delete_node(T value) {
 
 			delete_child(curr_);
 		}
-		else {
+		else if (n_->left || n_->right){
 			delete_child(n_);
+		}
+		else {
+			replace_node(n_, nullptr);
+			delete n_;
 		}
 	}
 }
@@ -371,7 +376,6 @@ void tree_t<T>::delete_child(node_t *n_) {
 		}
 		else {
 			delete_1(child_);
-			//delete_1(n_);
 		}
 	}
 	delete n_;
@@ -388,7 +392,7 @@ template <typename T>
 void tree_t<T>::delete_2(node_t *n_) {
 	node_t *s_ = brother(n_);
 
-	if (s_->color == 1) {
+	if (s_ && s_->color == 1) {
 		n_->parent->color = 1;
 		s_->color = 0;
 		if (n_ == n_->parent->left) {
