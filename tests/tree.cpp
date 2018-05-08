@@ -276,9 +276,9 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
         tree.print(ostream1);
         REQUIRE( ostream1.str() ==			"    ---- b7\n"
 							"---- b6\n"
-							"       ---- b2\n"
-							"   ---- r2\n"
-							"       ---- b1\n" );
+							"        ---- b2\n"
+							"    ---- r2\n"
+							"        ---- b1\n" );
         }
         SECTION( "when brother is black and his right son is red" ) {
             tree.insert( 1 );
