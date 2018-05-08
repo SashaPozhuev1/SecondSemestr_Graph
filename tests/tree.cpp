@@ -24,7 +24,7 @@ TEST_CASE("find tree")
 
 TEST_CASE("compare tree")
 {
-	tree_t<int> A { 5, 7, 4 };
+	tree_t<int> A { 5, 7, 4, 4 };
 	tree_t<int> B { 5, 7, 4, 4 };
 	tree_t<int> C { 5, 7, 4, 4, 6 };
 	
