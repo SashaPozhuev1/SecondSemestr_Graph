@@ -351,12 +351,8 @@ void tree_t<T>::delete_node(T value) {
 
 			delete_child(curr_);
 		}
-		else if (n_->left || n_->right){
-			delete_child(n_);
-		}
 		else {
-			replace_node(n_, nullptr);
-			delete n_;
+			delete_child(n_);
 		}
 	}
 }
