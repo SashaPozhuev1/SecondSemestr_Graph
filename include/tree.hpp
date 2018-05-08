@@ -1,5 +1,4 @@
-#include<iostream>
-
+#include <iostream>
 template <typename T>
 class tree_t
 {
@@ -215,38 +214,33 @@ void tree_t<T>::create_node(T value, node_t *parent_, node_t *& curr_) {
 
 template <typename T>
 void tree_t<T>::insert(T value) {
-	if (find(value)) {
-
+	if (!root_) {
+		create_node(value, nullptr, root_);
+		insert_1(root_);
 	}
 	else {
-		if (!root_) {
-			create_node(value, nullptr, root_);
-			insert_1(root_);
-		}
-		else {
-			node_t * curr_ = root_;
-			while (curr_) {
-				if (value >= curr_->value) {
-					if (curr_->right) {
-						curr_ = curr_->right;
-					}
-					else {
-						create_node(value, curr_, curr_->right);
-						curr_ = curr_->right;
-						insert_1(curr_);
-						break;
-					}
+		node_t * curr_ = root_;
+		while (curr_) {
+			if (value >= curr_->value) {
+				if (curr_->right) {
+					curr_ = curr_->right;
 				}
-				else if (value < curr_->value) {
-					if (curr_->left) {
-						curr_ = curr_->left;
-					}
-					else {
-						create_node(value, curr_, curr_->left);
-						curr_ = curr_->left;
-						insert_1(curr_);
-						break;
-					}
+				else {
+					create_node(value, curr_, curr_->right);
+					curr_ = curr_->right;
+					insert_1(curr_);
+					break;
+				}
+			}
+			else if (value < curr_->value) {
+				if (curr_->left) {
+					curr_ = curr_->left;
+				}
+				else {
+					create_node(value, curr_, curr_->left);
+					curr_ = curr_->left;
+					insert_1(curr_);
+					break;
 				}
 			}
 		}
@@ -333,6 +327,9 @@ void tree_t<T>::replace_node(node_t *n_, node_t *child_) {
 		else {
 			n_->parent->right = child_;
 		}
+		if (child_) {
+			child_->parent = n_->parent;
+		}
 	}
 }
 
@@ -344,7 +341,7 @@ void tree_t<T>::delete_node(T value) {
 	if (n_ && n_->value == value) {
 		if (n_->left && n_->right) {
 			node_t *curr_ = n_->right;
-
+			
 			while (curr_->left) {
 				curr_ = curr_->left;
 			}
@@ -374,6 +371,7 @@ void tree_t<T>::delete_child(node_t *n_) {
 		}
 		else {
 			delete_1(child_);
+			//delete_1(n_);
 		}
 	}
 	delete n_;
