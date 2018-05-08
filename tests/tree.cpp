@@ -266,10 +266,10 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.delete_node( 8 );
         tree.print(ostream);
         REQUIRE( ostream.str() ==			"    ---- b9\n"
-							"        ---- r7\n"
+							"        ---- b7\n"
 							"---- b6\n"
 							"        ---- b2\n"
-							"    ---- r2\n"
+							"    ---- b2\n"
 							"        ---- b1\n" );
         tree.delete_node( 9 );
 		std::ostringstream ostream1;
@@ -304,19 +304,19 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"    ---- b6\n"
 							"        ---- b5\n"
 							"---- b4\n"
-							"        ---- b2\n"
-							"    ---- b1\n"
-							"        ---- b0\n" );
+							"    ---- b2\n"
+							"        ---- b1\n"
+							"            ---- r0\n" );
             tree.delete_node( 2 );
 		std::ostringstream ostream3;
             tree.print(ostream3);
         REQUIRE( ostream3.str() ==			"            ---- r11\n"
 							"        ---- b10\n"
 							"            ---- r9\n"
-							"    ---- b8\n"
+							"    ---- r8\n"
 							"        ---- b7\n"
 							"---- b6\n"
-							"        ---- b5\n"
+							"        ---- r5\n"
 							"    ---- b4\n"
 							"        ---- b1\n"
 							"            ---- r0\n" );
@@ -355,24 +355,24 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"        ---- b5\n"
 							"            ---- b5\n"
 							"---- b4\n"
-							"        ---- b2\n"
-							"    ---- b1\n"
-							"        ---- b0\n" );
+							"    ---- b2\n"
+							"        ---- b1\n"
+							"            ---- r0\n" );
             tree.delete_node( 2 );
 		std::ostringstream ostream2;
             tree.print(ostream2);
         REQUIRE( ostream2.str() ==			"            ---- r11\n"
 							"        ---- b10\n"
 							"            ---- r9\n"
-							"    ---- b8\n"
+							"    ---- r8\n"
 							"        ---- b7\n"
 							"---- b6\n"
 							"                ---- r5\n"
 							"            ---- b5\n"
-							"        ---- b5\n"
+							"        ---- r5\n"
 							"            ---- b5\n"
-							"    ---- r5\n"
-							"                ---- b5\n"
+							"    ---- b5\n"
+							"                ---- r5\n"
 							"        ---- b4\n"
 							"            ---- b1\n"
 							"                ---- r0\n" );
