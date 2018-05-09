@@ -1,4 +1,4 @@
-# SecondSemestr_black_red_tree
+# SecondSemestr_Graph
 
 [![Build Status](https://travis-ci.org/SashaPozhuev1/SeconSemestr_black_red_tree.svg?branch=master)](https://travis-ci.org/SashaPozhuev1/SeconSemestr_black_red_tree)
 
