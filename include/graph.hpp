@@ -26,8 +26,8 @@ public:
 	graph<T> & operator = (graph<T> const &);
 
 	void insert(T, vector< vector<std::size_t> > const &);
-	void dfs()const;
-	void print_contact()const;
+	void dfs(std::ostream &)const;
+	void print_contact(std::ostream &)const;
 	
 	std::size_t elements()const;
 };
@@ -97,7 +97,7 @@ void graph<T>::insert(T value, vector< vector<std::size_t> > const & contact) {
 }
 
 template <typename T>
-void graph<T>::dfs() const {
+void graph<T>::dfs(std::ostream & ostream) const {
 	std::stack<std::size_t> my_stack;
 	vector<color_t> color;
 
@@ -122,24 +122,24 @@ void graph<T>::dfs() const {
 					color[i - 1] = color_t::GREY;
 				}
 			}
-			std::cout << graph_[n] << ':' << n + 1 << std::endl;
+			ostream << graph_[n] << ':' << n + 1 << std::endl;
 		}
 	}
 }
 	
 //выводит - вершину:её номер:список связей
 template <typename T>
-void graph<T>::print_contact() const {
+void graph<T>::print_contact(std::ostream & ostream) const {
 	for (std::size_t i = 0; i < elements_; ++i) {
-		std::cout << graph_[i] << ':' << i + 1 << ':';
+		ostream << graph_[i] << ':' << i + 1 << ':';
 
 		if (contact_[i].size() < 1) {
-			std::cout << '\n';
+			ostream << '\n';
 		}
 
 		for (std::size_t j = 0; j < contact_[i].size(); ++j) {
-			j == contact_[i].size() - 1 ? std::cout << contact_[i][j] + 1 << '\n':
-						      std::cout << contact_[i][j] + 1 << ", ";
+			j == contact_[i].size() - 1 ? ostream << contact_[i][j] + 1 << '\n':
+						      ostream << contact_[i][j] + 1 << ", ";
 		}
 	}
 }
