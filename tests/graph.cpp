@@ -85,11 +85,11 @@ TEST_CASE("graph dfs")
   
   graf.dfs(ostream);
   
-  REQUIRE( ostream.str() ) == "5:1\n"
-                              "6:2\n"
-                              "8:3\n"
-                              "8:4\n"
-                              "4:5\n"
-                              "3:6\n"
-                              "1:7\n");
+  REQUIRE( ostream.str() == "5:1\n"
+                            "6:2\n"
+                            "8:3\n"
+                            "8:4\n"
+                            "4:5\n"
+                            "3:6\n"
+                            "1:7\n");
 }
