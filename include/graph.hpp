@@ -28,6 +28,8 @@ public:
 	void insert(T, vector< vector<std::size_t> > const &);
 	void dfs()const;
 	void print_contact()const;
+	
+	std::size_t elements()const;
 };
 
 template <typename T>
@@ -63,6 +65,11 @@ graph<T> & graph<T>::operator = (graph<T> const & other) {
 	graph_ = other.graph_;
 	contact_ = other.contact_;
 	return *this;
+}
+
+template <typename T>
+std::size_t graph<T>::elements() const {
+	return elements_;
 }
 
 //вставляем новую вершину и выбираем для неё связи
