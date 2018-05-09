@@ -93,3 +93,19 @@ TEST_CASE("graph dfs")
                             "3:6\n"
                             "1:7\n");
 }
+
+TEST_CASE("graph's errors")
+{
+	vector<vector<std::size_t>> contact1 = { { 0 }, {} };
+	vector<vector<std::size_t>> contact2 = { { 0, 0 } };
+	vector<vector<std::size_t>> contact3 = { { 1 } };
+	
+	graph<int> graf1;
+	REQUIRE_THROWS_AS( graf1.insert(10, contact1), std::out_of_range );
+	
+	graph<int> graf2;
+	REQUIRE_THROWS_AS( graf2.insert(10, contact2), std::out_of_range );
+	
+	graph<int> graf3;
+	REQUIRE_THROWS_AS( graf3.insert(10, contact3), std::out_of_range );
+}
