@@ -26,7 +26,7 @@ public:
 	graph<T> & operator = (graph<T> const &);
 
 	void insert(T, vector< vector<std::size_t> > const &);
-	void dfs(std::ostream &)const;
+	void dfs(std::ostream &)const;//обход в глубину
 	void print_contact(std::ostream &)const;
 	
 	std::size_t elements()const;
